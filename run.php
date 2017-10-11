@@ -1,10 +1,10 @@
 <?php
 /**
-* PHP crontab 
+* PHP crontab
 * 使用方法:在config.ini中配置要执行的计划任务
 *          在php-cli执行run.php
 * @author Devil
-**/	
+**/
 while(true){
 		$config = parse_ini_file('config.ini',true);
 		foreach($config as $cronName=>$info){
@@ -15,9 +15,10 @@ while(true){
             }
 			$runStatus = timeMark($info['run_time']);
 			if($runStatus){
-                $memory = convert(memory_get_usage(true));
-				echo '['.date('Y-m-d H:i:s').'] Task:['.$cronName."]->Is Runing Mem:".$memory."\r\n";
-				pclose( popen('cd '.$info['cd_dir'].'&'.$info['common'].$outputCommon,'r'));
+                $memory = convert(memory_get_usage(true));//内存消耗
+								echo "4秒被调用一次".PHP_EOL;
+				// echo '['.date('Y-m-d H:i:s').'] Task:['.$cronName."]->Is Runing Mem:".$memory."\r\n";
+				// pclose( popen('cd '.$info['cd_dir'].'&'.$info['common'].$outputCommon,'r'));
 				//pclose($handle);
 			}else{
 				echo '['.date('Y-m-d H:i:s').']'."Waiting for a task\r\n";
@@ -26,12 +27,12 @@ while(true){
 	sleep(1);
 }
 
-	
+
 /**
 *解析时间计划任务规则
 */
 //$match = '*/3 18 * * *';
-//$res = timeMark($match);	
+//$res = timeMark($match);
 function timeMark($match){
 	$s = date('s');//秒
 	$i = date('i');//分
@@ -93,7 +94,7 @@ function analysis($rank,$num,$time,$timeType){
 	return in_array($time,$temp)?true:false;
 }
 //根据当前时间计算是否定时循环执行
-//$time当前时间 $num周期值 
+//$time当前时间 $num周期值
 function analysis_t($time,$num){
 	return $time%$num == 0?true:false;
 }
@@ -114,4 +115,3 @@ function convert($size)
         $unit=array('b','kb','mb','gb','tb','pb');
             return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
 }
-
