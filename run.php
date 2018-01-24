@@ -3,7 +3,7 @@
 * PHP crontab
 * 使用方法:在config.ini中配置要执行的计划任务
 *          在php-cli执行run.php
-* @author Devil
+* @author jinmore
 **/
 while(true){
 		$config = parse_ini_file('config.ini',true);
